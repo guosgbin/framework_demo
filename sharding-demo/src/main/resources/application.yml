@@ -1,0 +1,12 @@
+server:
+  port: 10086
+spring:
+  application:
+    name: sharding-demo
+  profiles:
+    active: tables
+  main:
+    allow-bean-definition-overriding: true
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
