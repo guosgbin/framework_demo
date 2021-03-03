@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class mybatisPlusConfig {
+public class MybatisPlusConfig {
 
     /**
      * 配置mybatis-plus插件

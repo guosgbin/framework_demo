@@ -18,13 +18,6 @@ import java.util.List;
  */
 public interface OrderDao extends BaseMapper<Order> {
 
-    @Insert("INSERT INTO t_order (order_id, price, user_id, status, create_time)" +
-            " VALUES(#{orderId}, #{price}, #{userId}, #{status}, #{createTime})")
-    int insertOrder(Order order);
-
-    @Select("SELECT * FROM t_order")
-    List<Order> queryAllOrder();
-
     @Select("SELECT SUM(price) FROM t_order")
     int querySum();
 
