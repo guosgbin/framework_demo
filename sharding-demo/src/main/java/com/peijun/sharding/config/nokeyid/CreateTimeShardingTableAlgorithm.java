@@ -87,11 +87,14 @@ public class CreateTimeShardingTableAlgorithm
         while (lowerDate.isBefore(upperDate) || lowerDate.equals(upperDate)) {
             String tableSuffix = lowerDate.format(TABLE_SUFFIX_FORMAT);
             String realTable = logicTableName + tableSuffix;
-            routeTableList.add(realTable);
+            // 判断待路由的表是否存在
+            if (availableTargetNames.contains(realTable)) {
+                routeTableList.add(realTable);
+            }
             lowerDate = lowerDate.plusMonths(1);
         }
         logger.warn("--< 时间分片-范围分片>--: 范围路由表名 -> {}", routeTableList);
-        return routeTableList;
+        return routeTableList; // 返回size为0的话 会直接 去查找逻辑表 eg. select * from t_order 而不是t_order_2021_02等
     }
 
     /**
@@ -121,7 +124,8 @@ public class CreateTimeShardingTableAlgorithm
         }
         if (lowerTime == null) {
             // 没有传递下限 则拿上限的前两个月 当然可以1,2,3,4..个月
-            lowerTime = upperTime.plusMonths(2);
+            // 当然也可以拿小于结束时间的所有存在的表
+            lowerTime = upperTime.plusMonths(-2); // 拿前一个月和本月的
         }
         if (upperTime == null) {
             // 没有传递上限 则拿下限的后两个月

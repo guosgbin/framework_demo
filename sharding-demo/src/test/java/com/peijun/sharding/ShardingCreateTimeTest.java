@@ -26,6 +26,7 @@ import java.util.List;
  * 测试无条件分页 {@link #testPage()}
  * 测试条件查询 = {@link #testQueryEq()}
  * 测试范围查询 包含开始结束 {@link #testQueryClosed()}
+ * 测试范围查询 不含开始,包含结束 {@link #testQueryNoLower()}
  *
  *
  */
@@ -108,46 +109,61 @@ public class ShardingCreateTimeTest {
      */
     @Test
     public void testQueryClosed() {
-        LocalDateTime now1 = LocalDateTime.parse("2021-02-25 00:00:00", FORMATTER);
-        LocalDateTime now2 = LocalDateTime.parse("2021-04-25 00:00:00", FORMATTER);
-
+        LocalDateTime startTime = LocalDateTime.parse("2021-01-25 00:00:00", FORMATTER);
+        LocalDateTime endTime = LocalDateTime.parse("2021-05-25 00:00:00", FORMATTER);
         LambdaQueryWrapper<Order> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.gt(Order::getCreateTime, now1)
-                .lt(Order::getCreateTime, now2);
+        queryWrapper.gt(Order::getCreateTime, startTime)
+                .lt(Order::getCreateTime, endTime);
+        List<Order> orders = orderDao.selectList(queryWrapper);
+        orders.forEach(System.out::println);
+    }
+
+    /**
+     * 测试范围查询 不含开始,包含结束
+     */
+    @Test
+    public void testQueryNoLower() {
+        LocalDateTime endTime = LocalDateTime.parse("2021-08-25 00:00:00", FORMATTER);
+        LambdaQueryWrapper<Order> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.lt(Order::getCreateTime, endTime);
         List<Order> orders = orderDao.selectList(queryWrapper);
         orders.forEach(System.out::println);
     }
 
 
-    @Test
-    public void testQuerySum() {
-        int sum = orderDao.querySum();
-        System.out.println(sum);
-    }
-
-    @Test
-    public void testQueryRangeSum() {
-        int sum = orderDao.queryRangeSum();
-        System.out.println(sum);
-    }
 
 
-    /**
-     * 测试 路由
-     */
-    @Test
-    public void testQueryByCreateTime() {
-        List<Order> orders = orderDao.queryByCreateTime();
-        orders.forEach(System.out::println);
-    }
 
-    /**
-     * 测试 路由
-     */
-    @Test
-    public void testQueryRangeByCreateTime() {
-        List<Order> orders = orderDao.queryRangeByCreateTime();
-        orders.forEach(System.out::println);
-    }
+
+//    @Test
+//    public void testQuerySum() {
+//        int sum = orderDao.querySum();
+//        System.out.println(sum);
+//    }
+//
+//    @Test
+//    public void testQueryRangeSum() {
+//        int sum = orderDao.queryRangeSum();
+//        System.out.println(sum);
+//    }
+//
+//
+//    /**
+//     * 测试 路由
+//     */
+//    @Test
+//    public void testQueryByCreateTime() {
+//        List<Order> orders = orderDao.queryByCreateTime();
+//        orders.forEach(System.out::println);
+//    }
+//
+//    /**
+//     * 测试 路由
+//     */
+//    @Test
+//    public void testQueryRangeByCreateTime() {
+//        List<Order> orders = orderDao.queryRangeByCreateTime();
+//        orders.forEach(System.out::println);
+//    }
 
 }
