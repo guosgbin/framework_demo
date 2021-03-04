@@ -1,9 +1,8 @@
 package com.peijun.sharding.dao;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.peijun.sharding.pojo.Order;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Insert;
+import com.peijun.sharding.dto.OrderDTO;
+import com.peijun.sharding.pojo.Order;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -49,4 +48,16 @@ public interface OrderDao extends BaseMapper<Order> {
     @Select("SELECT SUM(price) AS sum FROM t_order WHERE create_time >= #{startTime} AND create_time <= #{endTime} GROUP BY user_id")
     List<Map> selectGroupBy(@Param("startTime") LocalDateTime startTime,
                             @Param("endTime") LocalDateTime endTime);
+
+    @Select(" SELECT t1.*,t2.* " +
+            " FROM t_order t1" +
+            " LEFT JOIN t_user t2 ON t1.user_id = t2.user_id ")
+    List<OrderDTO> selectJoinUser();
+
+    @Select(" SELECT t1.*,t2.* " +
+            " FROM t_order t1" +
+            " LEFT JOIN t_user t2 ON t1.user_id = t2.user_id " +
+            " WHERE t1.create_time >= #{startTime} AND t1.create_time <= #{endTime}")
+    List<OrderDTO> selectJoinUserByCondition(@Param("startTime") LocalDateTime startTime,
+                                             @Param("endTime") LocalDateTime endTime);
 }

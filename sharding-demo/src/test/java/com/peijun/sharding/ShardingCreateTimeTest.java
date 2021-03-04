@@ -1,17 +1,16 @@
 package com.peijun.sharding;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.peijun.sharding.dao.OrderDao;
+import com.peijun.sharding.dto.OrderDTO;
 import com.peijun.sharding.pojo.Order;
 import com.peijun.sharding.service.OrderService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -45,6 +44,9 @@ import java.util.Random;
  * ===== 单表聚合查询 =====
  * 测试SUM {@link #testQuerySum()}
  * 测试AVG {@link #testQueryClosed()} 注意SQL改写 补列
+ *
+ * ===== 联表 =====
+ *
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ShardingDemoApplication.class)
@@ -69,7 +71,7 @@ public class ShardingCreateTimeTest {
         for (long i = 1; i <= 50; i++) {
             Order order = new Order();
             order.setOrderId(i);
-            long userId = 1000 + i + i % 2;
+            long userId = 10000 + i + i % 2;
             order.setUserId((int) userId);
             order.setPrice(new BigDecimal(new Random().nextInt(100) + 1));
             order.setStatus(1);
@@ -259,6 +261,19 @@ public class ShardingCreateTimeTest {
 
         List<Order> orders = orderDao.selectList(queryWrapper);
         orders.forEach(System.out::println);
+    }
+
+    /**
+     * 测试联表
+     */
+    @Test
+    public void testQueryJoin() {
+        LocalDateTime startTime = LocalDateTime.parse("2021-03-25 00:00:00", FORMATTER);
+        LocalDateTime endTime = LocalDateTime.parse("2021-05-25 00:00:00", FORMATTER);
+
+//        List<OrderDTO> orderList = orderDao.selectJoinUser();
+        List<OrderDTO> orderList = orderDao.selectJoinUserByCondition(startTime, endTime);
+        orderList.forEach(System.out::println);
     }
 
 }

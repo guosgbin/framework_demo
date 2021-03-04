@@ -1,57 +1,49 @@
-package com.peijun.sharding.pojo;
+package com.peijun.sharding.dto;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-/**
- * <p>
- * 订单表
- * </p>
- *
- * @author Kwok Dylan GSGB
- * @since 2021-03-02
- */
-@TableName("t_order")
-public class Order implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class OrderDTO {
 
     /**
      * 订单id
      */
-    @TableId(value = "order_id", type = IdType.INPUT)
     private Long orderId;
 
     /**
      * 订单价格
      */
-    @TableField("price")
     private BigDecimal price;
 
     /**
      * 下单用户id
      */
-    @TableField("user_id")
     private Integer userId;
 
     /**
      * 订单状态
      */
-    @TableField("status")
     private Integer status;
 
     /**
      * 时间
      */
-    @TableField("create_time")
     private LocalDateTime createTime;
 
+    /**
+     * 用户名
+     */
+    private String username;
+
+    /**
+     * 年龄
+     */
+    private Integer age;
+
+    /**
+     * 手机
+     */
+    private String phone;
 
     public Long getOrderId() {
         return orderId;
@@ -77,6 +69,30 @@ public class Order implements Serializable {
         this.userId = userId;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public Integer getStatus() {
         return status;
     }
@@ -95,12 +111,15 @@ public class Order implements Serializable {
 
     @Override
     public String toString() {
-        return "Order202102{" +
-        "orderId=" + orderId +
-        ", price=" + price +
-        ", userId=" + userId +
-        ", status=" + status +
-        ", createTime=" + createTime +
-        "}";
+        return "OrderDTO{" +
+                "orderId=" + orderId +
+                ", price=" + price +
+                ", userId=" + userId +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                ", username='" + username + '\'' +
+                ", age=" + age +
+                ", phone='" + phone + '\'' +
+                '}';
     }
 }

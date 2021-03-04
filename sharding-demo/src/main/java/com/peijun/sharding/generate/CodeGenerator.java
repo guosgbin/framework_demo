@@ -1,6 +1,5 @@
 package com.peijun.sharding.generate;
 
-import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
@@ -24,8 +23,8 @@ public class CodeGenerator {
 
     //生成配置
     private static final Boolean generatorController = false; // 生成Controller
-    private static final Boolean generatorService = true; // 生成 Service
-    private static final Boolean generatorServiceImpl = true; // 生成 ServiceImpl
+    private static final Boolean generatorService = false; // 生成 Service
+    private static final Boolean generatorServiceImpl = false; // 生成 ServiceImpl
     private static final Boolean generatorMapper = true; // 生成 Mapper
     private static final Boolean generatorEntity = true; // 生成 Entity
     private static final Boolean generatorXML = false; // 生成 XML
