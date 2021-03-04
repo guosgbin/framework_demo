@@ -39,7 +39,8 @@ import java.util.Random;
  * 测试范围查询 BETWEEN AND {@linkplain #testQueryBetweenAnd()}
  * <p>
  * ===== 单表分组 排序等 =====
- * <p>
+ * 测试分组 {@link #testQueryGroupBy()}
+ * 测试排序 {@link #testQueryDescAndAsc()}
  * <p>
  * ===== 单表聚合查询 =====
  * 测试SUM {@link #testQuerySum()}
