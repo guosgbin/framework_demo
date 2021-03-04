@@ -54,6 +54,10 @@ public class CreateTimeShardingTableAlgorithm
         String logicTableName = shardingValue.getLogicTableName();
         String suffix = TABLE_SUFFIX_FORMAT.format(waitRouteTime);
         String tableName = logicTableName + suffix;
+        if (!availableTargetNames.contains(tableName)) {
+            // 可以封装自己公共的异常类，在外出抓取进行提示
+            throw new IllegalArgumentException("路由的表不存在");
+        }
         logger.warn("--< 时间分片-精确分片 >--: 真正路由到的表为[{}]", tableName);
         logger.warn("--< 时间分片-精确分片 >--: 结束...");
         return tableName;
@@ -93,6 +97,9 @@ public class CreateTimeShardingTableAlgorithm
             }
             lowerDate = lowerDate.plusMonths(1);
         }
+        if (routeTableList.isEmpty()) {
+            throw new IllegalArgumentException("路由的表不存在");
+        }
         logger.warn("--< 时间分片-范围分片>--: 范围路由表名 -> {}", routeTableList);
         return routeTableList; // 返回size为0的话 会直接 去查找逻辑表 eg. select * from t_order 而不是t_order_2021_02等
     }
@@ -123,7 +130,7 @@ public class CreateTimeShardingTableAlgorithm
             throw new UnsupportedOperationException("时间分片-范围分片 上下限为空");
         }
         if (lowerTime == null) {
-            // 没有传递下限 则拿上限的前两个月 当然可以1,2,3,4..个月
+            // 没有传递下限 则拿上限的前两个月 当然可以1,2,3,4..个月 1年
             // 当然也可以拿小于结束时间的所有存在的表
             lowerTime = upperTime.plusMonths(-2); // 拿前一个月和本月的
         }

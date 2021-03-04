@@ -24,13 +24,13 @@ public class CodeGenerator {
 
     //生成配置
     private static final Boolean generatorController = false; // 生成Controller
-    private static final Boolean generatorService = false; // 生成 Service
-    private static final Boolean generatorServiceImpl = false; // 生成 ServiceImpl
+    private static final Boolean generatorService = true; // 生成 Service
+    private static final Boolean generatorServiceImpl = true; // 生成 ServiceImpl
     private static final Boolean generatorMapper = true; // 生成 Mapper
     private static final Boolean generatorEntity = true; // 生成 Entity
     private static final Boolean generatorXML = false; // 生成 XML
 
-    private static final Boolean overWrite = true; // 覆盖已经存在的文件
+    private static final Boolean overWrite = false; // 覆盖已经存在的文件
 
     // 基本配置
     private static final String url = "jdbc:mysql://127.0.0.1:3306/order_db?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai";
