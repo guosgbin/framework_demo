@@ -46,6 +46,7 @@ import java.util.Random;
  * 测试AVG {@link #testQueryClosed()} 注意SQL改写 补列
  *
  * ===== 联表 =====
+ * 测试联表 {@link #testQueryJoin()}
  *
  */
 @RunWith(SpringRunner.class)
