@@ -107,13 +107,16 @@ public class User2ServiceImpl extends ServiceImpl<User2Dao, User2> implements Us
     }
 
     @Override
+    @Transactional(propagation = Propagation.NESTED)
     public void addNested(User2 user) {
-
+        this.save(user);
     }
 
     @Override
+    @Transactional(propagation = Propagation.NESTED)
     public void addNestedException(User2 user) {
-
+        this.save(user);
+        throw new RuntimeException();
     }
 
     @Override

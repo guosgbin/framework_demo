@@ -99,8 +99,9 @@ public class User1ServiceImpl extends ServiceImpl<User1Dao, User1> implements Us
     }
 
     @Override
+    @Transactional(propagation = Propagation.NESTED)
     public void addNested(User1 user) {
-
+        this.save(user);
     }
 
     @Override
