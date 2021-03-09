@@ -1,7 +1,7 @@
 package com.peijun.transaction.dao;
 
+import com.peijun.transaction.pojo.User2;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.peijun.transaction.pojo.User;
 
 /**
  * <p>
@@ -9,8 +9,8 @@ import com.peijun.transaction.pojo.User;
  * </p>
  *
  * @author Kwok Dylan GSGB
- * @since 2021-03-04
+ * @since 2021-03-09
  */
-public interface UserDao extends BaseMapper<User> {
+public interface User2Dao extends BaseMapper<User2> {
 
 }
