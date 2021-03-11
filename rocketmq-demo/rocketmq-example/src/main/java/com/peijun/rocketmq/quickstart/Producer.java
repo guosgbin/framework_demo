@@ -19,6 +19,7 @@ import org.apache.rocketmq.remoting.common.RemotingHelper;
  * ifconfig.me
  *
  *
+ * sh /usr/local/rocketmq/bin/mqadmin consumerProgress -n 127.0.0.1:9876 | awk {if($7 > 0){print $1,$7}}
  * $ sh /usr/local/rocketmq/bin/mqadmin consumerProgress -n 127.0.0.1:9876  | awk '{print $1,$7}'              //所有消费组group
  * $ sh /usr/local/rocketmq/bin/mqadmin topicList -n 127.0.0.1:9876                                   //查看所有topic
  * $ sh /usr/local/rocketmq/bin/mqadmin topicstatus -n 127.0.0.1:9876 -t contract_match_market_push_deeps                //查看Topic状态
